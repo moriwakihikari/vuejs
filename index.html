@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+
+    <div id="app">
+      <p>{{ message }}</p>
+      <button v-on:click="reverseMessage">
+        メッセージ反転
+      </button>  
+      <!-- v-html -->
+      <div v-html="html"></div>
+
+      <!-- v-bind 省略形[:] -->
+      <a :[attribute]="url">Google</a>
+      <a v-bind="twitterObject">Twitter</a>
+
+      <!-- v-on イベントと組み合わせ 省略形[@] -->
+      <p>{{ number }}回クリック</p>
+      <button @[event]="countUp(1)">カウントアップ</button>
+      <p @mousemove="changeMousePosition(1, $event)">マウスを乗せてください
+      <!-- v-on stop.prevent 挙動を止める イベント修飾子 -->
+        <span v-on:mousemove.stop.prevent>反応しないでください</span>
+      <p>X:{{x}}, Y:{{y}}</p>
+      </p>
+      <p>リンク無視</p>
+      <a v-on:click.prevent.stop href="https://google.com">Google</a>
+      <br>
+      <!-- v-on  キー修飾子　キーボードに対してのアクション -->
+      <p>スペース,エンターでアラート</p>
+      <input type="text" v-on:keyup.enter.space="myAlert">
+
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+                data: {
+                    message: 'HelloWorld',
+                    html: '<h1>h1です</h1>',
+                    url: 'https://google.com',
+                    attribute: 'href',
+                    twitterObject: {
+                        href: 'https://twitter.com',
+                        id: 31
+                    },
+                    number: 0,
+                    x: 0,
+                    y: 0,
+                    event: 'click'
+                },
+                methods: {
+                    reverseMessage: function() {
+                    this.message =
+                    this.message.split('').reverse().join('')
+                    },
+                    countUp: function(times) {
+                        this.number += 1 * times
+                    },
+                    changeMousePosition: function(divideNmber, event) {
+                        this.x = event.clientX / divideNmber;
+                        this.y = event.clientY / divideNmber;
+                    },
+                    myAlert() {
+                        alert('アラート');
+                    }
+                }
+            })
+    </script>
+</body>
+</html>
